@@ -68,6 +68,19 @@ _.str.capitalize('epeli')
 => "Epeli"
 ```
 
+**numberFormat** _.numberFormat(number, [ decimals=0, decimalSeparator='.', orderSeparator=','])
+
+Formats the numbers.
+
+```javascript
+_.numberFormat(1000, 2)
+=> "1,000.00"
+
+_.numberFormat(123456789.123, 5, '.', ',')
+=> "123,456,789.12300"
+```
+
+
 **levenshtein** _.levenshtein(string1, string2)
 
 Calculates [Levenshtein distance][ld] between two strings.
@@ -369,12 +382,12 @@ _('Hello').prune(10)
 => 'Hello'
 ```
 
-**words** _.words(str, delimiter=" ")
+**words** _.words(str, delimiter=/\s+/)
 
-Split string by delimiter (String or RegExp), ' ' by default.
+Split string by delimiter (String or RegExp), /\s+/ by default.
 
 ```javascript
-_.words("I love you")
+_.words("   I   love   you   ")
 => ["I","love","you"]
 
 _.words("I_love_you", "_")
@@ -382,6 +395,9 @@ _.words("I_love_you", "_")
 
 _.words("I-love-you", /-/)
 => ["I","love","you"]
+
+_.words("   ")
+=> []
 ```
 
 **sprintf** _.sprintf(string format, *arguments)
@@ -523,6 +539,21 @@ _.toSentence(['jQuery', 'Mootools', 'Prototype'], ', ', ' unt ')
 => 'jQuery, Mootools unt Prototype';
 ```
 
+**toSentenceSerial**  _.toSentenceSerial(array, [delimiter, lastDelimiter])
+
+The same as `toSentence`, but adjusts delimeters to use [Serial comma](http://en.wikipedia.org/wiki/Serial_comma).
+
+```javascript
+_.toSentenceSerial(['jQuery', 'Mootools'])
+=> 'Mootools and Prototype';
+
+_.toSentenceSerial(['jQuery', 'Mootools', 'Prototype'])
+=> 'jQuery, Mootools, and Prototype'
+
+_.toSentenceSerial(['jQuery', 'Mootools', 'Prototype'], ', ', ' unt ');
+=> 'jQuery, Mootools, unt Prototype';
+```
+
 **repeat** _.repeat(string, count, [separator])
 
 Repeats a string count times.
@@ -569,14 +600,6 @@ _.slugify("Un éléphant à l'orée du bois")
 
 Any suggestions or bug reports are welcome. Just email me or more preferably open an issue.
 
-## Changelog ##
-
-### 2.0.0 ###
-
-* Added prune, humanize functions
-* Added _.string (_.str) namespace for Underscore.string library
-* Removed includes function
-
 #### Problems
 
 We lose two things for `include` and `reverse` methods from `_.string`:
@@ -604,6 +627,18 @@ But of course you can just reassign `_` variable with `_.string`
 ```javascript
 _ = _.string
 ```
+
+## Changelog ##
+
+### 2.3.0 ###
+
+* Added `numberformat` method
+* Added `levenshtein` method (Levenshtein distance calculation)
+* Added `swapCase` method
+* Changed default behavior of `words` method
+* Added `toSentenceSerial` method
+* Added `surround` and `quote` methods
+
 ### 2.2.0 ###
 
 * Capitalize method behavior changed
@@ -622,6 +657,10 @@ _ = _.string
 * Lots of speed optimizations
 
 ### 2.0.0 ###
+
+* Added prune, humanize functions
+* Added _.string (_.str) namespace for Underscore.string library
+* Removed includes function
 
 For upgrading to this version you need to mix in Underscore.string library to Underscore object:
 
@@ -670,16 +709,8 @@ or create alias `_.includes = _.str.include` and all your code will work fine.
 Otherwise changes will be rejected.
 
 ## Contributors list ##
+[Can be found here](https://github.com/epeli/underscore.string/graphs/contributors).
 
-*  Esa-Matti Suuronen <esa-matti@suuronen.org> (<http://esa-matti.suuronen.org/>),
-*  Edward Tsech <edtsech@gmail.com>,
-*  Sasha Koss <kossnocorp@gmail.com> (<http://koss.nocorp.me/>),
-*  Vladimir Dronnikov <dronnikov@gmail.com>,
-*  Pete Kruckenberg (<https://github.com/kruckenb>),
-*  Paul Chavard <paul@chavard.net> (<http://tchak.net>),
-*  Ed Finkler <coj@funkatron.com> (<http://funkatron.com>)
-*  Pavel Pravosud <rwz@duckroll.ru>
-*  Anton Lindqvist <anton@qvister.se> (<http://qvister.se>)
 
 ## Licence ##
 
